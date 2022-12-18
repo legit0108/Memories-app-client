@@ -31,7 +31,8 @@ const ResetPassword = () => {
 
         try{
             const result = await api.resetPassword(formData, id, token)
-            const {message} = result.data
+            const {message, link} = result.data
+            console.log(link)
             setSuccessMsg(message)
         }catch(error){
             const {message} = error.response.data
