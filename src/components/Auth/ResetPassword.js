@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {TextField, Avatar, Button, Paper, Grid, Typography, Container} from '@material-ui/core'
 import useStyles from './styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
@@ -18,7 +18,12 @@ const ResetPassword = () => {
     const history = useHistory();
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
     const match = useRouteMatch();
+    const[link, setLink] = useState("")
 
+    useEffect(()=>{
+        console.log(link) 
+    },[link])
+    
     const handleChange = (event) => {
         const target = event.target;
         setFormData({...formData, [target.name] : target.value})
@@ -32,7 +37,7 @@ const ResetPassword = () => {
         try{
             const result = await api.resetPassword(formData, id, token)
             const {message, link} = result.data
-            console.log(link)
+            setLink(link)
             setSuccessMsg(message)
         }catch(error){
             const {message} = error.response.data
