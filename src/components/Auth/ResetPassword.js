@@ -18,11 +18,6 @@ const ResetPassword = () => {
     const history = useHistory();
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
     const match = useRouteMatch();
-    const[link, setLink] = useState("")
-
-    useEffect(()=>{
-        console.log(link) 
-    },[link])
     
     const handleChange = (event) => {
         const target = event.target;
@@ -36,9 +31,8 @@ const ResetPassword = () => {
 
         try{
             const result = await api.resetPassword(formData, id, token)
-            const {message, link} = result.data
-            setLink(link)
-            setSuccessMsg(link)
+            const {message} = result.data
+            setSuccessMsg(message)
         }catch(error){
             const {message} = error.response.data
             setErrorMsg(message)

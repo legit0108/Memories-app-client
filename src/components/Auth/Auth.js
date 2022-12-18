@@ -22,6 +22,11 @@ const Auth = () => {
   const[formData, setFormData] = useState(initialState);
   const[statusCode, setStatusCode] = useState(null)
   const[signupErrorMsg, setSignupErrorMsg] = useState('');
+  const[link, setLink] = useState("")
+
+  useEffect(()=>{
+    console.log(link) 
+  },[link])
 
   const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
 
@@ -55,7 +60,10 @@ const Auth = () => {
     event.preventDefault();
 
     try{
-      await api.forgotPassword(formData)
+      const result = await api.forgotPassword(formData)
+      const {link} = result.data
+      
+      setLink(link)
       setForgotPassword(false)
       setSuccessMessage(true)
     }catch(error){ 
